@@ -23,7 +23,8 @@ func main() {
 	case "client":
 		fmt.Println("Client not implemented yet")
 		// startClient()
-	case "default":
+	default:
 		fmt.Println(usageMsg)
+		os.Exit(1)
 	}
 }
