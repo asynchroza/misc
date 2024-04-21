@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"math"
+	"math/rand"
 	"net"
 	"net/http"
 )
@@ -59,7 +60,11 @@ func StartClient() {
 	}
 	defer conn.Close()
 
-	loc := GetLocation("46.238.5.11")
+	ips := []string{"223.151.131.42", "44.197.11.96"}
+
+	randIndex := rand.Intn(len(ips))
+	loc := GetLocation(ips[randIndex])
+
 	bytes := []byte{byte(version)}
 	bytes = append(bytes, FloatToBytes(loc.Latitude)...)
 	bytes = append(bytes, FloatToBytes(loc.Longitude)...)
@@ -67,14 +72,15 @@ func StartClient() {
 	fmt.Println("Longitude:", loc.Longitude)
 	fmt.Println("Latitude:", loc.Latitude)
 	fmt.Println("Sending message:", bytes)
-	_, err = conn.Write(bytes)
 
-	if err != nil {
-		fmt.Println("Error sending message:", err)
-		return
+	for {
+		_, err = conn.Write(bytes)
+
+		if err != nil {
+			fmt.Println("Error sending message:", err)
+			return
+		}
 	}
-
-	conn.Close()
 }
 
 func FloatToBytes(f float32) []byte {
