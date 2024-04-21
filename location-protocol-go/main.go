@@ -3,6 +3,9 @@ package main
 import (
 	"fmt"
 	"os"
+
+	"github.com/asynchroza/misc/location-protocol-go/client"
+	"github.com/asynchroza/misc/location-protocol-go/server"
 )
 
 func main() {
@@ -18,11 +21,10 @@ func main() {
 	arg := args[1]
 	switch arg {
 	case "server":
-		// startServer()
-		fmt.Println("Server not implemented yet")
+		server.StartServer()
 	case "client":
 		fmt.Println("Client not implemented yet")
-		// startClient()
+		client.StartClient()
 	default:
 		fmt.Println(usageMsg)
 		os.Exit(1)
